@@ -30,6 +30,12 @@ All names and talks currently in the repository are sample content.
   (`.github/scripts/render-flyers.mjs`), and commits new or changed
   PDFs. Unchanged flyers are skipped using `flyers/.hashes.json`; it can
   also be run by hand from the Actions tab
+- `calendar.ics` — Liquid template for the subscribable iCalendar feed
+  (`/calendar.ics`): one event per talk, from `start:`/`end:` (defaults
+  in `_data/site.yml`), leaving out cancelled talks and no-seminar
+  weeks. Its `VTIMEZONE` block must match `timezone:` in `_config.yml`
+- `_includes/clock.html`, `_includes/time-range.html` — read the
+  `"HH:MM"` start/end fields and print them as "3:00 – 4:00 PM"
 - `images/` — speaker and team photos, and the flyer logo
 
 ## Deploying

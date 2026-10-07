@@ -5,7 +5,7 @@ permalink: /
 {% assign talks = site.talks | where_exp: "t", "t.template != true" | sort: "date" %}
 {% assign semesters = talks | group_by: "semester" %}
 {% assign now_s = site.time | date: "%s" | plus: 0 %}
-{% for t in talks %}{% assign ts = t.date | date: "%s" | plus: 0 %}{% if t.speaker and ts >= now_s %}{% unless next_talk %}{% assign next_talk = t %}{% endunless %}{% endif %}{% endfor %}
+{% for t in talks %}{% assign ts = t.date | date: "%s" | plus: 0 %}{% if t.speaker and ts >= now_s %}{% unless next_talk or t.cancelled %}{% assign next_talk = t %}{% endunless %}{% endif %}{% endfor %}
 
 <div class="hero">
   <div>
@@ -14,6 +14,8 @@ permalink: /
     <p class="lede">{{ site.data.site.intro }}</p>
     <ul class="facts"><li><b>When</b>{{ site.data.site.when }}</li><li><b>Where</b>{{ site.data.site.where }}</li></ul>
     <div class="jump">{% for s in semesters %}<a href="#{{ s.name | slugify }}">{{ s.name }}</a>{% endfor %}</div>
+    {% assign ics = site.url | append: "/calendar.ics" %}
+    <p class="subscribe"><a href="{{ ics | replace_first: "https://", "webcal://" | replace_first: "http://", "webcal://" }}">Subscribe to the calendar</a> <span>or add this URL in Google Calendar (Other calendars → From URL): <span class="email">{{ ics }}</span></span></p>
   </div>
   {% if site.data.site.flyer_show %}
   <figure class="flyer" id="flyer" data-for="{% if next_talk %}{{ next_talk.date | date: '%Y-%m-%d' }}{% endif %}">
@@ -43,21 +45,22 @@ permalink: /
 <div class="semester" id="{{ s.name | slugify }}">
   <div class="semester-head">
     <h2>{{ s.name }}</h2>
-    {% assign n = s.items | where_exp: "t", "t.speaker" | size %}
+    {% assign n = s.items | where_exp: "t", "t.speaker" | where_exp: "t", "t.cancelled != true" | size %}
     <span>{{ n }} talks</span>
   </div>
   <ol class="talks">
     {% for t in s.items %}
     {% if t.speaker %}
     {% assign w = t.speaker | replace: "Dr. ", "" | split: " " %}
-    <li class="talk" data-date="{{ t.date | date: '%Y-%m-%d' }}" data-speaker="{{ t.speaker | escape }}" data-title="{{ t.title | escape }}" data-affil="{{ t.affiliation | escape }}" data-initials="{{ w[0] | slice: 0 | upcase }}{{ w[1] | slice: 0 | upcase }}" data-datelong="{{ t.date | date: '%A, %B %-d' }}" data-room="{{ t.room | default: site.data.site.where | escape }}" data-flyer="{{ t.url | remove_first: '/' }}"{% if t.photo %} data-photo="{{ t.photo }}"{% endif %}>
+    {% if t.zoom == false %}{% assign zoom = "" %}{% else %}{% assign zoom = t.zoom | default: site.data.site.zoom %}{% endif %}
+    <li class="talk{% if t.cancelled %} cancelled{% endif %}"{% if t.cancelled %} data-cancelled{% endif %} data-date="{{ t.date | date: '%Y-%m-%d' }}" data-speaker="{{ t.speaker | escape }}" data-title="{{ t.title | escape }}" data-affil="{{ t.affiliation | escape }}" data-initials="{{ w[0] | slice: 0 | upcase }}{{ w[1] | slice: 0 | upcase }}" data-datelong="{{ t.date | date: '%A, %B %-d' }}" data-room="{{ t.room | default: site.data.site.where | escape }}" data-flyer="{{ t.url | remove_first: '/' }}"{% if t.photo %} data-photo="{{ t.photo }}"{% endif %}>
       <div class="date"><span class="day">{{ t.date | date: "%b %-d" }}</span><span class="dow">{{ t.date | date: "%A" }}</span></div>
       <div class="talk-main">
         <p class="speaker">{{ t.speaker }}</p>
         <p class="affil">{{ t.affiliation }}</p>
         <p class="title">{{ t.title }}</p>
       </div>
-      <div class="meta">{% if t.host %}<div>Host: {{ t.host }}</div>{% endif %}<div>{{ t.room | default: site.data.site.where }}</div><div><a href="{{ t.url | remove_first: '/' }}">Flyer</a></div></div>
+      <div class="meta">{% if t.host %}<div>Host: {{ t.host }}</div>{% endif %}<div>{% include time-range.html talk=t %}</div><div>{{ t.room | default: site.data.site.where }}</div>{% if zoom and zoom != "" %}{% unless t.cancelled %}<div><a href="{{ zoom }}">Zoom</a></div>{% endunless %}{% endif %}<div><a href="{{ t.url | remove_first: '/' }}">Flyer</a></div>{% if t.slides and t.slides != "" %}<div><a href="{{ t.slides }}">Slides</a></div>{% endif %}{% if t.recording and t.recording != "" %}<div><a href="{{ t.recording }}">Recording</a></div>{% endif %}</div>
     </li>
     {% else %}
     <li class="talk break" data-date="{{ t.date | date: '%Y-%m-%d' }}">
@@ -87,7 +90,8 @@ permalink: /
   let next = null;
   for (const row of document.querySelectorAll(".talk[data-date]")) {
     const d = parse(row.dataset.date);
-    if (d < today) { row.classList.add("past"); addTag(row, "Past"); }
+    if ("cancelled" in row.dataset) { if (d < today) row.classList.add("past"); addTag(row, "Cancelled"); }
+    else if (d < today) { row.classList.add("past"); addTag(row, "Past"); }
     else if (!next && row.dataset.speaker) { next = row; row.classList.add("next"); addTag(row, "Next up"); }
   }
   /* Repoint the hero flyer card at the true next talk when the build predates it. */

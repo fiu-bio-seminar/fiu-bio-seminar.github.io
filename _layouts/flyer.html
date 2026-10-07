@@ -14,11 +14,12 @@
 {%- elsif last == 3 -%}{%- assign sfx = "rd" -%}
 {%- else -%}{%- assign sfx = "th" -%}{%- endif -%}
 {%- assign w = page.speaker | replace: "Dr. ", "" | split: " " -%}
+{%- if page.zoom == false -%}{%- assign zoom = "" -%}{%- else -%}{%- assign zoom = page.zoom | default: s.zoom -%}{%- endif -%}
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Flyer · {{ page.speaker | default: page.note }} · {{ page.date | date: "%B %-d, %Y" }}</title>
+<title>{% if page.cancelled %}Cancelled · {% endif %}Flyer · {{ page.speaker | default: page.note }} · {{ page.date | date: "%B %-d, %Y" }}</title>
 <style>
 /* Letter-size poster. Colors are fixed brand constants (a printed flyer
    does not follow the screen's dark mode). */
@@ -52,6 +53,10 @@ body { margin: 0; padding: 24px 12px 48px; font-family: Arial, Helvetica, sans-s
 .foot a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
 .foot .host { font-weight: 400; font-size: 11pt; text-align: right; }
 
+/* Diagonal stamp across the whole page for a cancelled talk. */
+.cancelled-stamp { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; pointer-events: none; }
+.cancelled-stamp span { transform: rotate(-52deg); font-weight: 700; font-size: 96pt; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; color: rgba(208, 2, 27, 0.85); -webkit-text-stroke: 3px #FFFFFF; paint-order: stroke fill; }
+
 .nothing { flex: 1; display: grid; place-items: center; text-align: center; font-size: 28pt; font-weight: 700; padding: 1in; }
 
 @media screen and (max-width: 860px) {
@@ -83,7 +88,7 @@ body { margin: 0; padding: 24px 12px 48px; font-family: Arial, Helvetica, sans-s
     <div class="lead" id="fit-lead">
       <h1 class="title">{{ page.title }}</h1>
       {% if page.subtitle %}<p class="sub">{{ page.subtitle }}</p>{% endif %}
-      <p class="when">{{ page.date | date: "%a, %B %-d" }}<sup>{{ sfx }}</sup><br>{{ page.time | default: s.time }}{% assign room = page.room | default: s.where %}{% if room %}<br>{{ room }}{% endif %}</p>
+      <p class="when">{{ page.date | date: "%a, %B %-d" }}<sup>{{ sfx }}</sup><br>{% include time-range.html talk=page %}{% assign room = page.room | default: s.where %}{% if room %}<br>{{ room }}{% endif %}{% if zoom and zoom != "" %}<br>Zoom: {{ zoom | remove_first: "https://" | remove_first: "http://" }}{% endif %}</p>
     </div>
     <div class="who">
       <div class="photo">{{ w[0] | slice: 0 | upcase }}{{ w[1] | slice: 0 | upcase }}{% if page.photo %}<img src="../{{ page.photo }}" alt="{{ page.speaker | escape }}" onerror="this.remove()">{% endif %}</div>
@@ -100,6 +105,8 @@ body { margin: 0; padding: 24px 12px 48px; font-family: Arial, Helvetica, sans-s
     {% if page.link %}<a href="{{ page.link }}">{{ page.link | remove_first: "https://" | remove_first: "http://" }}</a>{% else %}<span>{{ s.contact }}</span>{% endif %}
     {% if page.host %}<span class="host">Host: {{ page.host }}</span>{% endif %}
   </div>
+
+  {% if page.cancelled %}<div class="cancelled-stamp" aria-hidden="true"><span>Cancelled</span></div>{% endif %}
 </div>
 
 <script>

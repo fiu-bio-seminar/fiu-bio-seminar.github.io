@@ -25,6 +25,45 @@ Rules that keep the build happy:
 - Leave `room: ""` to show the default venue; type a room to override it.
 - If a field does not apply (no host yet), delete the whole line.
 
+## Slides and recordings
+
+After a talk, open its file in `_talks`, press the pencil icon, and add
+either or both lines between the two `---` lines:
+
+```
+slides: https://example.edu/slides.pdf
+recording: https://example.edu/recording
+```
+
+The schedule then shows **Slides** and **Recording** links in that
+talk's row. A slides file can also be uploaded to the repository (for
+example to a `slides` folder) and given as `slides: slides/rivera.pdf`.
+Leave a field empty, or leave the line out, and no link is shown.
+
+## Cancel a talk
+
+Open the talk's file in `_talks`, press the pencil icon, and add the line
+
+```
+cancelled: true
+```
+
+between the two `---` lines, then commit. Keep the file — do not delete
+it. The schedule then shows the talk with a red **Cancelled** tag (the
+"Next up" highlight and home-page flyer move on to the following talk),
+the flyer and its PDF get a large diagonal **CANCELLED**, and the talk is
+removed from the calendar feed. To undo, delete the line or set
+`cancelled: false`.
+
+## The calendar feed
+
+The site publishes every talk as a calendar people can subscribe to, at
+`https://fiu-bio-seminar.github.io/calendar.ics` (linked from the home
+page as "Subscribe to the calendar"). It updates by itself whenever a
+talk is added, edited, or cancelled. Subscribers' calendar apps check
+for changes on their own schedule — Google Calendar can take up to a
+day — so a late change may not reach everyone immediately.
+
 ## A week with no seminar
 
 Create the file with only three fields:
@@ -74,8 +113,11 @@ flyer page works any time, too.
 The flyer uses these fields from the talk's file:
 
 - `title:` and the optional `subtitle:` (printed as a second line)
-- `date:`, plus `time:` — leave `time:` out to use the usual seminar
-  time from `_data/site.yml`
+- `date:`, plus `start:` and `end:` — 24-hour times in quotes, such as
+  `start: "12:00"` and `end: "13:30"`; leave them out to use the usual
+  seminar times from `_data/site.yml`
+- `zoom:` (optional) — the talk's Zoom link; leave it out to use the
+  default `zoom:` from `_data/site.yml`, or write `zoom: false` for none
 - `speaker:`, `affiliation:`, `photo:`
 - the abstract, written below the second `---`
 - `link:` (optional, e.g. the speaker's web page) — printed in the footer
@@ -89,7 +131,8 @@ shrunk automatically to keep the flyer on one page.
 
 - Team page: edit `_data/team.yml`. Photos go in `images/`.
 - Links page: edit `_data/links.yml`.
-- Site name, year, venue, time, contact address: edit `_data/site.yml`.
+- Site name, year, venue, default start/end time, default Zoom link,
+  contact address: edit `_data/site.yml`.
 
 In these files, keep the indentation and the quotes exactly as they
 are and change only the text between the quotes.

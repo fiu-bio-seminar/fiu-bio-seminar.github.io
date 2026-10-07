@@ -1,0 +1,18 @@
+{%- comment -%}
+  Reads one time of day from include.value — "HH:MM" text, or the number
+  YAML turns an unquoted 15:00 into (minutes, 900.0, in Jekyll's YAML
+  reader; seconds in plain Ruby YAML) — and sets clock_h (0-23)
+  and clock_mm (two-digit minutes text) for the page that included it.
+{%- endcomment -%}
+{%- assign clock_v = include.value | append: "" -%}
+{%- if clock_v contains ":" -%}
+  {%- assign clock_p = clock_v | split: ":" -%}
+  {%- assign clock_h = clock_p[0] | plus: 0 -%}
+  {%- assign clock_m = clock_p[1] | plus: 0 -%}
+{%- else -%}
+  {%- assign clock_n = clock_v | plus: 0 | round -%}
+  {%- if clock_n >= 1440 -%}{%- assign clock_n = clock_n | divided_by: 60 -%}{%- endif -%}
+  {%- assign clock_h = clock_n | divided_by: 60 -%}
+  {%- assign clock_m = clock_n | modulo: 60 -%}
+{%- endif -%}
+{%- if clock_m < 10 -%}{%- assign clock_mm = clock_m | prepend: "0" -%}{%- else -%}{%- assign clock_mm = clock_m | append: "" -%}{%- endif -%}

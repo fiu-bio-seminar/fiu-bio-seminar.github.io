@@ -1,0 +1,82 @@
+---
+layout: null
+permalink: /calendar.ics
+---
+BEGIN:VCALENDAR
+{%- comment %}
+  Subscribable calendar of every talk (past and upcoming). Cancelled talks,
+  no-seminar weeks and the template are left out, so cancelling a talk
+  removes it from subscribers' calendars at their next refresh.
+  Tag-only lines trim only the newline before them, so no blank lines
+  appear in the output. The VTIMEZONE below must match timezone: in
+  _config.yml.
+{% endcomment %}
+{%- assign s = site.data.site %}
+{%- assign host = site.url | remove_first: "https://" | remove_first: "http://" %}
+{%- assign talks = site.talks | where_exp: "t", "t.template != true" | where_exp: "t", "t.speaker" | where_exp: "t", "t.cancelled != true" | sort: "date" %}
+{%- assign now = site.time | date: "%s" | plus: 0 %}
+{%- assign z = site.time | date: "%z" %}
+{%- assign zh = z | slice: 1, 2 | plus: 0 %}
+{%- assign zm = z | slice: 3, 2 | plus: 0 %}
+{%- assign zm = zm | times: 60 %}
+{%- assign zs = zh | times: 3600 | plus: zm %}
+{%- comment %} DTSTAMP must be UTC; Liquid formats in local time, so shift the epoch by the zone offset. {% endcomment %}
+{%- if z contains "-" %}{% assign stamp = now | plus: zs %}{% else %}{% assign stamp = now | minus: zs %}{% endif %}
+{%- assign stamp = stamp | date: "%Y%m%dT%H%M%SZ" %}
+PRODID:-//{{ host }}//Seminar calendar//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:{{ s.name | replace: "\", "\\" | replace: ";", "\;" | replace: ",", "\," }}
+X-WR-TIMEZONE:{{ site.timezone }}
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VTIMEZONE
+TZID:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+{%- for t in talks %}
+{%- assign name = t.url | split: "/" | last | remove: ".html" %}
+{%- assign day = t.date | date: "%Y%m%d" %}
+{%- assign v = t.start | default: s.start %}{% include clock.html value=v %}
+{%- assign t_start = clock_h | prepend: "0" | slice: -2, 2 | append: clock_mm %}
+{%- assign v = t.end | default: s.end %}{% include clock.html value=v %}
+{%- assign t_end = clock_h | prepend: "0" | slice: -2, 2 | append: clock_mm %}
+{%- if t.zoom == false %}{% assign zoom = "" %}{% else %}{% assign zoom = t.zoom | default: s.zoom %}{% endif %}
+{%- assign room = t.room | default: s.where %}
+{%- capture desc %}{{ t.speaker }}{% if t.affiliation %} ({{ t.affiliation }}){% endif %}
+
+{{ t.title }}{% if t.subtitle %}: {{ t.subtitle }}{% endif %}{% if t.host %}
+
+Host: {{ t.host }}{% endif %}{% if zoom and zoom != "" %}
+
+Zoom: {{ zoom }}{% endif %}
+
+Flyer: {{ site.url }}{{ t.url }}{% endcapture %}
+BEGIN:VEVENT
+UID:{{ name }}@{{ host }}
+DTSTAMP:{{ stamp }}
+DTSTART;TZID=America/New_York:{{ day }}T{{ t_start }}00
+DTEND;TZID=America/New_York:{{ day }}T{{ t_end }}00
+SUMMARY:{{ t.speaker | append: ": " | append: t.title | strip_newlines | replace: "\", "\\" | replace: ";", "\;" | replace: ",", "\," }}
+{%- if room %}
+LOCATION:{{ room | strip_newlines | replace: "\", "\\" | replace: ";", "\;" | replace: ",", "\," }}
+{%- endif %}
+DESCRIPTION:{{ desc | strip | replace: "\", "\\" | replace: ";", "\;" | replace: ",", "\," | newline_to_br | strip_newlines | replace: "<br />", "\n" }}
+URL:{{ site.url }}{{ t.url }}
+END:VEVENT
+{%- endfor %}
+END:VCALENDAR

@@ -1,7 +1,8 @@
 # Site-wide build settings. Editors normally never touch this file;
 # the text content lives in _data/ and _talks/.
 title: Biology Seminar Series
-timezone: America/Chicago
+url: "https://fiu-bio-seminar.github.io"   # used for links in the calendar feed
+timezone: America/New_York   # the calendar feed's VTIMEZONE (calendar.ics) must match
 future: true      # write flyer pages for upcoming (future-dated) talks
 
 collections:
