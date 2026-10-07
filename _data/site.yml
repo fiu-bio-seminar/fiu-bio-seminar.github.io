@@ -20,7 +20,9 @@ zoom: ""
 #   semesters:
 #     - "Fall 2026"
 #     - "Spring 2027"
-semesters: []
+semesters:
+      - "Fall 2026"
+      - "Spring 2027"
 
 # Set to false to hide the weekly flyer panel on the home page.
 flyer_show: true
