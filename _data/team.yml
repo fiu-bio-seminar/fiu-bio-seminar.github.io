@@ -1,5 +1,6 @@
 # Organizing committee. One block per person, in display order.
-# photo: a file name inside images/ (square photos work best).
+# photo: a file name inside images/ (square photos work best), or a full
+# https:// link to an image hosted elsewhere.
 # Leave photo: "" to show initials instead.
 intro: "The seminar is organized by a volunteer committee of postdocs, graduate students, and faculty."
 members:

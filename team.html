@@ -12,7 +12,7 @@ permalink: /team.html
     <div class="avatar" aria-hidden="true">
       {%- assign words = p.name | replace: "Dr. ", "" | split: " " -%}
       {{ words[0] | slice: 0 | upcase }}{{ words[1] | slice: 0 | upcase }}
-      {%- if p.photo and p.photo != "" %}<img src="images/{{ p.photo }}" alt="" onerror="this.remove()">{% endif -%}
+      {%- if p.photo and p.photo != "" %}<img src="{% unless p.photo contains '://' %}images/{% endunless %}{{ p.photo }}" alt="" onerror="this.remove()">{% endif -%}
     </div>
     <div><div class="role">{{ p.role }}</div><h3>{{ p.name }}</h3></div>
     <p>{{ p.bio }}</p>
