@@ -1,0 +1,21 @@
+# Site-wide build settings. Editors normally never touch this file;
+# the text content lives in _data/ and _talks/.
+title: Biology Seminar Series
+timezone: America/Chicago
+future: true      # write flyer pages for upcoming (future-dated) talks
+
+collections:
+  talks:
+    output: true    # each talk gets a printable flyer page
+    permalink: /flyers/:name.html
+
+defaults:
+  - scope: { path: "", type: talks }
+    values: { layout: flyer }
+
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
