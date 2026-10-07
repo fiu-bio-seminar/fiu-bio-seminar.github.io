@@ -3,11 +3,11 @@
 # Leave photo: "" to show initials instead.
 intro: "The seminar is organized by a volunteer committee of postdocs, graduate students, and faculty."
 members:
-  - name: "Dr. Faculty Advisor"
+  - name: "Dr. Jason Pienaar"
     role: "Faculty Advisor"
     bio: "One or two sentences about this person and what they do for the series."
-    email: "name@example.edu"
-    photo: ""
+    email: "jpienaar@fiu.edu"
+    photo: "https://case.fiu.edu/about/directory/people/_assets/profiles/jason-pienaar.jpeg"
   - name: "Student Name"
     role: "Student Committee Member"
     bio: "Invites speakers and arranges their visits."
