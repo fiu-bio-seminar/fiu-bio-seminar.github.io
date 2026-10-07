@@ -93,8 +93,17 @@ To add the speaker's photo:
    `photo: images/rivera.jpg`.
 3. Commit.
 
-If a talk has no `photo:` line, the flyer shows the speaker's
-initials instead.
+Instead of uploading, `photo:` can also be a full link to an image on
+another site, for example
+`photo: https://example.edu/people/rivera.jpg` (use the address of the
+image itself, ending in `.jpg`, `.png`, etc., not of a web page). The
+same works for team photos in `_data/team.yml` and the flyer logo in
+`_data/site.yml`. A copy in `images/` is more reliable: a linked image
+disappears if the other site moves it, and some sites block their
+images from being shown elsewhere.
+
+If a talk has no `photo:` line, or its image cannot be loaded, the
+flyer shows the speaker's initials instead.
 
 ## The printable flyer
 

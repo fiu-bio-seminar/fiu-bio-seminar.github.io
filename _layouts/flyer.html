@@ -1,8 +1,9 @@
 <!doctype html>
 {%- comment -%}
   Printable letter-size flyer, generated for every file in _talks/.
-  Lives at flyers/<file-name>.html; images are referenced with "../"
-  because the page sits one folder below the site root.
+  Lives at flyers/<file-name>.html; images in the repository are
+  referenced with "../" because the page sits one folder below the site
+  root, while full links (containing "://") are used as-is.
 {%- endcomment -%}
 {%- assign s = site.data.site -%}
 {%- assign series = s.flyer_series | default: s.name -%}
@@ -80,7 +81,7 @@ body { margin: 0; padding: 24px 12px 48px; font-family: Arial, Helvetica, sans-s
 
 <div class="sheet"{% if page.template or page.speaker == nil %} data-no-pdf{% endif %}>
   <div class="top">{{ series }} | {{ page.semester }}</div>
-  {% if s.flyer_logo %}<img class="logo" src="../{{ s.flyer_logo }}" alt="">{% endif %}
+  {% if s.flyer_logo %}<img class="logo" src="{% unless s.flyer_logo contains '://' %}../{% endunless %}{{ s.flyer_logo }}" alt="">{% endif %}
 
   {% if page.speaker %}
   <div class="bar"></div>
@@ -91,7 +92,7 @@ body { margin: 0; padding: 24px 12px 48px; font-family: Arial, Helvetica, sans-s
       <p class="when">{{ page.date | date: "%a, %B %-d" }}<sup>{{ sfx }}</sup><br>{% include time-range.html talk=page %}{% assign room = page.room | default: s.where %}{% if room %}<br>{{ room }}{% endif %}{% if zoom and zoom != "" %}<br>Zoom: {{ zoom | remove_first: "https://" | remove_first: "http://" }}{% endif %}</p>
     </div>
     <div class="who">
-      <div class="photo">{{ w[0] | slice: 0 | upcase }}{{ w[1] | slice: 0 | upcase }}{% if page.photo %}<img src="../{{ page.photo }}" alt="{{ page.speaker | escape }}" onerror="this.remove()">{% endif %}</div>
+      <div class="photo">{{ w[0] | slice: 0 | upcase }}{{ w[1] | slice: 0 | upcase }}{% if page.photo %}<img src="{% unless page.photo contains '://' %}../{% endunless %}{{ page.photo }}" alt="{{ page.speaker | escape }}" onerror="this.remove()">{% endif %}</div>
       <p class="name">{{ page.speaker }}</p>
       {% if page.affiliation %}<p class="affil">{{ page.affiliation }}</p>{% endif %}
     </div>

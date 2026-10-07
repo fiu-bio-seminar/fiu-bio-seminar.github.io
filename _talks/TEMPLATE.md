@@ -2,8 +2,9 @@
 # COPY THIS FILE to add a talk — see CONTRIBUTING.md for the steps.
 # Name the new file YYYY-MM-DD-lastname.md (e.g. 2026-10-12-rivera.md).
 # Keep the quotes around the title and subtitle. Leave room: "" to use the default venue.
-# photo: the speaker's photo in images/ (square works best); delete the
-# line if there is no photo yet — initials are shown instead.
+# photo: the speaker's photo in images/ (square works best), or a full
+# https:// link to an image on another site; delete the line if there is
+# no photo yet — initials are shown instead.
 # subtitle, link: optional, used on the printable flyer.
 # start, end: optional 24-hour times in quotes ("13:30" = 1:30 PM). Delete
 # them to use the usual seminar times from _data/site.yml.

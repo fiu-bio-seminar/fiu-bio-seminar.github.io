@@ -19,5 +19,6 @@ flyer_show: true
 
 # Printable flyers (flyers/<talk-file>.html). The banner reads
 # "<flyer_series> | <semester>"; the logo sits in the top-right corner.
+# flyer_logo: a file in images/ or a full https:// link to an image.
 flyer_series: "Biology Colloquium Series"
 flyer_logo: images/flyer-logo.png

@@ -1,6 +1,7 @@
 // Renders every built talk flyer (_site/flyers/*.html) to flyers/<name>.pdf.
 // A flyer is re-rendered only when what it prints changes: the hash covers
-// the .sheet markup plus the bytes of every image it shows, and is kept in
+// the .sheet markup plus the bytes of every image it shows (downloaded, for
+// images linked from other sites), and is kept in
 // flyers/.hashes.json. PDFs whose talk file was removed are deleted.
 // Usage: node render-flyers.mjs <built-site-dir> <repo-dir>
 import { chromium } from "playwright";
@@ -30,6 +31,11 @@ for (const file of pages) {
   const h = createHash("sha256").update(await page.$eval(".sheet", el => el.outerHTML));
   const srcs = await page.$$eval(".sheet img", imgs => imgs.map(i => i.getAttribute("src")));
   for (const src of srcs) {
+    if (/^https?:\/\//i.test(src)) {
+      const res = await fetch(src).catch(() => null);
+      if (res?.ok) h.update(Buffer.from(await res.arrayBuffer()));
+      continue;
+    }
     const f = path.resolve(path.dirname(htmlPath), src);
     if (fs.existsSync(f)) h.update(fs.readFileSync(f));
   }
