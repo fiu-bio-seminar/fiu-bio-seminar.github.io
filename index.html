@@ -2,7 +2,9 @@
 layout: default
 permalink: /
 ---
-{% assign talks = site.talks | where_exp: "t", "t.template != true" | sort: "date" %}
+{% assign talks = site.talks | where_exp: "t", "t.template != true" | where_exp: "t", "t.hidden != true" | sort: "date" %}
+{% assign shown = site.data.site.semesters %}
+{% if shown and shown.size > 0 %}{% assign talks = talks | where_exp: "t", "shown contains t.semester" %}{% endif %}
 {% assign semesters = talks | group_by: "semester" %}
 {% assign now_s = site.time | date: "%s" | plus: 0 %}
 {% for t in talks %}{% assign ts = t.date | date: "%s" | plus: 0 %}{% if t.speaker and ts >= now_s %}{% unless next_talk or t.cancelled %}{% assign next_talk = t %}{% endunless %}{% endif %}{% endfor %}

@@ -20,7 +20,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% if page.cancelled %}Cancelled · {% endif %}Flyer · {{ page.speaker | default: page.note }} · {{ page.date | date: "%B %-d, %Y" }}</title>
+<title>{% if page.hidden %}Flyer{% else %}{% if page.cancelled %}Cancelled · {% endif %}Flyer · {{ page.speaker | default: page.note }} · {{ page.date | date: "%B %-d, %Y" }}{% endif %}</title>
+{% if page.hidden %}<meta name="robots" content="noindex">{% endif %}
 <style>
 /* Letter-size poster. Colors are fixed brand constants (a printed flyer
    does not follow the screen's dark mode). */
@@ -76,14 +77,14 @@ body { margin: 0; padding: 24px 12px 48px; font-family: Arial, Helvetica, sans-s
 
 <div class="tools">
   <a href="../">← Schedule</a>
-  <span>{% assign pdf = page.url | replace: ".html", ".pdf" %}{% assign have = site.static_files | where: "path", pdf %}{% if have.size > 0 %}<a href="{{ pdf | split: "/" | last }}" download>Download PDF</a> &nbsp; {% endif %}<button type="button" onclick="window.print()">Print / Save as PDF</button></span>
+  <span>{% assign pdf = page.url | replace: ".html", ".pdf" %}{% assign have = site.static_files | where: "path", pdf %}{% if have.size > 0 and page.hidden != true %}<a href="{{ pdf | split: "/" | last }}" download>Download PDF</a> &nbsp; {% endif %}<button type="button" onclick="window.print()">Print / Save as PDF</button></span>
 </div>
 
-<div class="sheet"{% if page.template or page.speaker == nil %} data-no-pdf{% endif %}>
+<div class="sheet"{% if page.template or page.hidden or page.speaker == nil %} data-no-pdf{% endif %}>
   <div class="top">{{ series }} | {{ page.semester }}</div>
   {% if s.flyer_logo %}<img class="logo" src="{% unless s.flyer_logo contains '://' %}../{% endunless %}{{ s.flyer_logo }}" alt="">{% endif %}
 
-  {% if page.speaker %}
+  {% if page.speaker and page.hidden != true %}
   <div class="bar"></div>
   <div class="mid">
     <div class="lead" id="fit-lead">
@@ -99,15 +100,15 @@ body { margin: 0; padding: 24px 12px 48px; font-family: Arial, Helvetica, sans-s
   </div>
   <div class="abstract" id="fit-abstract">{{ content }}</div>
   {% else %}
-  <div class="nothing">{{ page.note | default: "No seminar this week" }}</div>
+  <div class="nothing">{% if page.hidden %}This talk is not available{% else %}{{ page.note | default: "No seminar this week" }}{% endif %}</div>
   {% endif %}
 
   <div class="foot">
-    {% if page.link %}<a href="{{ page.link }}">{{ page.link | remove_first: "https://" | remove_first: "http://" }}</a>{% else %}<span>{{ s.contact }}</span>{% endif %}
-    {% if page.host %}<span class="host">Host: {{ page.host }}</span>{% endif %}
+    {% if page.link and page.hidden != true %}<a href="{{ page.link }}">{{ page.link | remove_first: "https://" | remove_first: "http://" }}</a>{% else %}<span>{{ s.contact }}</span>{% endif %}
+    {% if page.host and page.hidden != true %}<span class="host">Host: {{ page.host }}</span>{% endif %}
   </div>
 
-  {% if page.cancelled %}<div class="cancelled-stamp" aria-hidden="true"><span>Cancelled</span></div>{% endif %}
+  {% if page.cancelled and page.hidden != true %}<div class="cancelled-stamp" aria-hidden="true"><span>Cancelled</span></div>{% endif %}
 </div>
 
 <script>

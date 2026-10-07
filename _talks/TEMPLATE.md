@@ -12,6 +12,9 @@
 # _data/site.yml, or write zoom: false for no link.
 # slides, recording: optional links (usually added after the talk), shown
 # on the schedule. Leave them empty or delete the lines to show nothing.
+# hidden: set to true to hide the talk from the website and the calendar
+# feed (for example while it is not confirmed); its flyer page shows no
+# details and its PDF is removed.
 # cancelled: set to true to cancel the talk — its flyer is stamped
 # CANCELLED, the schedule marks it, and it leaves the calendar feed.
 # Delete the "template: true" line in your copy — it hides this file from the site.
@@ -31,6 +34,7 @@ photo: images/lastname.jpg
 link: https://example.edu/~lastname/
 slides: ""
 recording: ""
+hidden: false
 cancelled: false
 ---
 The abstract goes here, below the second `---`. It is printed on the

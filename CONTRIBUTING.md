@@ -40,6 +40,21 @@ talk's row. A slides file can also be uploaded to the repository (for
 example to a `slides` folder) and given as `slides: slides/rivera.pdf`.
 Leave a field empty, or leave the line out, and no link is shown.
 
+## Hide a talk
+
+To keep a talk off the website and out of the calendar feed — for
+example while it is not yet confirmed — add this line to its file:
+
+```
+hidden: true
+```
+
+The talk disappears from the schedule, the "Next up" card and the
+calendar feed. Its flyer address still exists but only says "This talk
+is not available", and its PDF is removed. Delete the line, or set
+`hidden: false`, to show it again. Note that the file itself is still
+visible to anyone who looks at this repository on GitHub.
+
 ## Cancel a talk
 
 Open the talk's file in `_talks`, press the pencil icon, and add the line
@@ -142,6 +157,10 @@ shrunk automatically to keep the flyer on one page.
 - Links page: edit `_data/links.yml`.
 - Site name, year, venue, default start/end time, default Zoom link,
   contact address: edit `_data/site.yml`.
+- Which semesters the home page shows: edit `semesters:` in
+  `_data/site.yml` (for example to hide past semesters). An empty list,
+  `semesters: []`, shows all of them. Hidden talks keep their flyers and
+  stay in the calendar feed.
 
 In these files, keep the indentation and the quotes exactly as they
 are and change only the text between the quotes.

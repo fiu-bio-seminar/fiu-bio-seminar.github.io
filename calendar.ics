@@ -4,8 +4,8 @@ permalink: /calendar.ics
 ---
 BEGIN:VCALENDAR
 {%- comment %}
-  Subscribable calendar of every talk (past and upcoming). Cancelled talks,
-  no-seminar weeks and the template are left out, so cancelling a talk
+  Subscribable calendar of every talk (past and upcoming). Cancelled and
+  hidden talks, no-seminar weeks and the template are left out, so cancelling a talk
   removes it from subscribers' calendars at their next refresh.
   Tag-only lines trim only the newline before them, so no blank lines
   appear in the output. The VTIMEZONE below must match timezone: in
@@ -13,7 +13,7 @@ BEGIN:VCALENDAR
 {% endcomment %}
 {%- assign s = site.data.site %}
 {%- assign host = site.url | remove_first: "https://" | remove_first: "http://" %}
-{%- assign talks = site.talks | where_exp: "t", "t.template != true" | where_exp: "t", "t.speaker" | where_exp: "t", "t.cancelled != true" | sort: "date" %}
+{%- assign talks = site.talks | where_exp: "t", "t.template != true" | where_exp: "t", "t.speaker" | where_exp: "t", "t.cancelled != true" | where_exp: "t", "t.hidden != true" | sort: "date" %}
 {%- assign now = site.time | date: "%s" | plus: 0 %}
 {%- assign z = site.time | date: "%z" %}
 {%- assign zh = z | slice: 1, 2 | plus: 0 %}

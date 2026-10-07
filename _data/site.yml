@@ -14,6 +14,14 @@ contact: "seminar@example.edu"
 # own with zoom:, or zoom: false to show no link.
 zoom: ""
 
+# Semesters shown on the home page schedule, written exactly as in the
+# talks' semester: field. Leave the list empty ([]) to show every semester.
+# Example:
+#   semesters:
+#     - "Fall 2026"
+#     - "Spring 2027"
+semesters: []
+
 # Set to false to hide the weekly flyer panel on the home page.
 flyer_show: true
 
