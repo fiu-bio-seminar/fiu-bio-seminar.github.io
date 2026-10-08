@@ -2,14 +2,14 @@
 name: "Biology Seminar Series"
 year: "2026–2027"
 intro: "A weekly seminar bringing researchers from across the life sciences to share new work with students, postdocs, and faculty. All are welcome."
-when: "Mondays, 3:00–4:00 PM"
+when: "Mondays, 12:00–1:00 PM"
 # Default start and end time of a talk, 24-hour "HH:MM" in quotes. Used on
 # the flyers and in the calendar feed; a talk can override them with
 # start: and end:.
 start: "12:00"
 end: "13:00"
-where: "Example University"
-contact: "seminar@example.edu"
+where: "Florida International University MMC campus"
+contact: "jpienaar@fiu.edu"
 # Default Zoom link for every talk; leave "" for none. A talk can use its
 # own with zoom:, or zoom: false to show no link.
 zoom: ""
