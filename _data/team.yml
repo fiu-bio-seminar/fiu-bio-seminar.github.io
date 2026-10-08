@@ -31,6 +31,6 @@ members:
     photo: ""
   - name: "Tori Eggers"
     role: "Student Committee Member"
-    bio: "One or two sentences about this person and what they do for the series."
+    bio: "Hi! I'm Tori, a 5th year PhD Candidate in Biology here at FIU, studying genome evolution through computational and comparative methods."
     email: "veggers@fiu.edu"
-    photo: "images/team/tori.jpg"
+    photo: "https://github.com/fiu-bio-seminar/fiu-bio-seminar.github.io/blob/main/images/team/tori.jpg"
