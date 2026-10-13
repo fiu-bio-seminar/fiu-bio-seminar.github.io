@@ -6,7 +6,7 @@ intro: "The seminar is organized by a volunteer committee of postdocs, graduate 
 members:
   - name: "Dr. Jason Pienaar"
     role: "Faculty Advisor"
-    bio: "One or two sentences about this person and what they do for the series."
+    bio: ""
     email: "jpienaar@fiu.edu"
     photo: "https://case.fiu.edu/about/directory/people/_assets/profiles/jason-pienaar.jpeg"
   - name: "Hannan Shabaan"
@@ -21,7 +21,7 @@ members:
     photo: ""  
   - name: "Jennifer Rubi"
     role: "Student Committee Member"
-    bio: "One or two sentences about this person and what they do for the series."
+    bio: "Jennifer is a 2nd year PhD student in the Biological Sciences Program at Florida International University (FIU). Her current work focuses on examining the relationship between the Learning Assistant (LA) program and Neurodiversity. She has a B.S in Biological Sciences and Natural & Applied Sciences from FIU. She is currently a graduate student for the Science Education And Society (SEAS) lab under Dr. Bryan Dewsbury. "
     email: "jrubi@fiu.edu"
     photo: "" 
   - name: "Jeidi Pinto"
