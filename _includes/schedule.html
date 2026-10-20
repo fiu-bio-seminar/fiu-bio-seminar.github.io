@@ -1,6 +1,3 @@
----
-layout: default
----
 {% assign campus = include.campus %}
 {% assign venue = include.where | default: venue %}
 {% assign talks = site.talks | where_exp: "t", "t.template != true" | where_exp: "t", "t.hidden != true" | where_exp: "t", "t.campus == campus or t.campus == nil" | sort: "date" %}
