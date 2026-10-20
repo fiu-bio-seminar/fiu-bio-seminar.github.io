@@ -32,6 +32,7 @@ host: Host Name
 room: ""
 photo: images/lastname.jpg
 link: https://example.edu/~lastname/
+campus: MMC
 slides: ""
 recording: ""
 hidden: false
