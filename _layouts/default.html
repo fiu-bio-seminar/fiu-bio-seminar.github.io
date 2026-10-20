@@ -165,7 +165,8 @@ footer { padding-block: 24px 40px; border-top: 1px solid var(--line); color: var
   <div class="topbar-inner">
     <div class="brand"><a href="./">{{ site.data.site.name }}</a></div>
     <nav aria-label="Pages">
-      <a href="./" {% if page.url == "/" %}aria-current="page"{% endif %}>Schedule</a>
+      <a href="mmc.html" {% if page.url == "/mmc.html" %}aria-current="page"{% endif %}>MMC Schedule</a>
+      <a href="bbc.html" {% if page.url == "/bbc.html" %}aria-current="page"{% endif %}>BBC Schedule</a>      
       <a href="team.html" {% if page.url == "/team.html" %}aria-current="page"{% endif %}>Team</a>
       <a href="links.html" {% if page.url == "/links.html" %}aria-current="page"{% endif %}>Links</a>
     </nav>
