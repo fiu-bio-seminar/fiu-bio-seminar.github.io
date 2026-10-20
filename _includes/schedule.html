@@ -1,6 +1,9 @@
 {% assign campus = include.campus %}
+{% assign all_talks = site.talks | where_exp: "t", "t.template != true" | where_exp: "t", "t.hidden != true" %}
+{% assign campus_talks = all_talks | where: "campus", campus %}
+{% assign neutral_talks = all_talks | where_exp: "t", "t.campus == nil" %}
+{% assign talks = campus_talks | concat: neutral_talks | sort: "date" %}
 {% assign venue = include.where | default: venue %}
-{% assign talks = site.talks | where_exp: "t", "t.template != true" | where_exp: "t", "t.hidden != true" | where_exp: "t", "t.campus == campus or t.campus == nil" | sort: "date" %}
 {% assign shown = site.data.site.semesters %}
 {% if shown and shown.size > 0 %}{% assign talks = talks | where_exp: "t", "shown contains t.semester" %}{% endif %}
 {% assign semesters = talks | group_by: "semester" %}
