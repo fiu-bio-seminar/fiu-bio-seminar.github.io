@@ -8,6 +8,6 @@ campus: BBC
 room: "MSB 105"
 start: "14:00"
 end: "15:00"
-photo: images/2026_Fall/casariego.png
+photo: images/BBC/2026_Fall/casariego.png
 link: https://crestcache.fiu.edu/about/students/profiles/rodriguez-casariego-javier.html
 ---
