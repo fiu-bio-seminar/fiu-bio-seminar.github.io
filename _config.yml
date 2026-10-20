@@ -13,6 +13,10 @@ collections:
 defaults:
   - scope: { path: "", type: talks }
     values: { layout: flyer }
+  - scope: { path: "_talks/BBC", type: talks }
+    values:
+      start: "14:00"
+      end: "15:00"
 
 exclude:
   - README.md
