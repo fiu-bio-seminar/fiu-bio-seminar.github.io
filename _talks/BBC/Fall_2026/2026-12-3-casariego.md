@@ -4,6 +4,7 @@ date: 2026-12-03
 speaker: Dr. Javier Rodriguez Casariego
 affiliation: Florida International University / Institute of Environment / CREST Center 
 title: "Marine animal models as discovery engines for cellular memory, resilience and vulnerability"
+campus: BBC
 room: "MSB 105"
 start: "14:00"
 end: "15:00"
