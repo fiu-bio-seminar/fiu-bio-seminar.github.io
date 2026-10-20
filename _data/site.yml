@@ -1,7 +1,7 @@
 # Site identity. Change only the text between the quotes.
 name: "Biology Seminar Series"
 year: "2026–2027"
-intro: "A weekly seminar bringing researchers from across the life sciences to share new work with students, postdocs, and faculty. All are welcome."
+intro: "A weekly seminar from researchers across the life sciences to share new work with students, postdocs, and faculty. All are welcome."
 when: "Mondays, 12:00–1:00 PM"
 # Default start and end time of a talk, 24-hour "HH:MM" in quotes. Used on
 # the flyers and in the calendar feed; a talk can override them with
