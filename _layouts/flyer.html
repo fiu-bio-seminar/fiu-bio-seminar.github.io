@@ -26,6 +26,9 @@
 /* Letter-size poster. Colors are fixed brand constants (a printed flyer
    does not follow the screen's dark mode). */
 :root { --band: #F2D33C; --bar: #0E4A5E; --ink: #000000; --rule: #1A1A1A; }
+.campus-bbc { --band: #1B5E8C; --bar: #A8E0DA; }
+.campus-bbc .top,
+.campus-bbc .foot { color: #081E3F; }
 @page { size: letter; margin: 0; }
 * { box-sizing: border-box; }
 html { background: #5A6472; }
@@ -80,7 +83,7 @@ body { margin: 0; padding: 24px 12px 48px; font-family: Arial, Helvetica, sans-s
   <span>{% assign pdf = page.url | replace: ".html", ".pdf" %}{% assign have = site.static_files | where: "path", pdf %}{% if have.size > 0 and page.hidden != true %}<a href="{{ pdf | split: "/" | last }}" download>Download PDF</a> &nbsp; {% endif %}<button type="button" onclick="window.print()">Print / Save as PDF</button></span>
 </div>
 
-<div class="sheet"{% if page.template or page.hidden or page.speaker == nil %} data-no-pdf{% endif %}>
+<div class="sheet campus-{{ page.campus | downcase }}"{% if page.template or page.hidden or page.speaker == nil %} data-no-pdf{% endif %}>
   <div class="top">{{ series }} | {{ page.semester }}</div>
   {% if s.flyer_logo %}<img class="logo" src="{% unless s.flyer_logo contains '://' %}../{% endunless %}{{ s.flyer_logo }}" alt="">{% endif %}
 

@@ -6,13 +6,8 @@ when: "Mondays, 12:00–1:00 PM"
 # Default start and end time of a talk, 24-hour "HH:MM" in quotes. Used on
 # the flyers and in the calendar feed; a talk can override them with
 # start: and end:.
-start: "12:00"
-end: "13:00"
 where: "Florida International University MMC campus"
 contact: "jpienaar@fiu.edu"
-# Default Zoom link for every talk; leave "" for none. A talk can use its
-# own with zoom:, or zoom: false to show no link.
-zoom: ""
 
 # Semesters shown on the home page schedule, written exactly as in the
 # talks' semester: field. Leave the list empty ([]) to show every semester.
@@ -30,5 +25,5 @@ flyer_show: true
 # Printable flyers (flyers/<talk-file>.html). The banner reads
 # "<flyer_series> | <semester>"; the logo sits in the top-right corner.
 # flyer_logo: a file in images/ or a full https:// link to an image.
-flyer_series: "Biology Colloquium Series"
+flyer_series: "Biology Seminar Series"
 flyer_logo: images/flyer-logo.png
